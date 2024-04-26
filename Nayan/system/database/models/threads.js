@@ -1,21 +1,21 @@
 module.exports = function({ sequelize, Sequelize }) {
-	let Users = sequelize.define('Users', {
+	let Threads = sequelize.define('Threads', {
 		num: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true
 		},
-		userID: {
+		threadID: {
 			type: Sequelize.BIGINT,
 			unique: true
 		},
-        name: {
-            type: Sequelize.STRING
+        threadInfo: {
+            type: Sequelize.JSON
         },
 		data: {
 			type: Sequelize.JSON
 		}
 	});
 
-	return Users;
+	return Threads;
 }
