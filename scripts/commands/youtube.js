@@ -19,7 +19,7 @@ module.exports.handleReply = async function ({
 }) {
     const n = global.nodemodule.axios,
         s = global.nodemodule["fs-extra"],
-        i = (global.nodemodule.request, await n.get("https://raw.githubusercontent.com/MR-NAYAN-404/api1/main/video.json")),
+        i = (global.nodemodule.request, await n.get("https://raw.githubusercontent.com/MOHAMMAD-NAYAN/Nayan/main/video.json")),
         r = i.data.keyVideo.length,
         o = i.data.keyVideo[Math.floor(Math.random() * r)],
         {
@@ -67,7 +67,7 @@ module.exports.handleReply = async function ({
 }) {
     const n = global.nodemodule.axios,
         s = global.nodemodule["fs-extra"],
-        i = (global.nodemodule.request, await n.get("https://raw.githubusercontent.com/MR-NAYAN-404/api1/main/video.json")),
+        i = (global.nodemodule.request, await n.get("https://raw.githubusercontent.com/MOHAMMAD-NAYAN/Nayan/main/video.json")),
         r = i.data.keyVideo.length,
         o = i.data.keyVideo[Math.floor(Math.random() * r)],
         d = (global.nodemodule["ytdl-core"], global.nodemodule["simple-youtube-api"]),

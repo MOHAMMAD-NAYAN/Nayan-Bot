@@ -25,9 +25,6 @@ module.exports.run = async function({ api, event, args }) {
   const axios = require("axios");
   const request = require("request");
   const { ytdown, ndown, tikdown, twitterdown } = require("nayan-media-downloader")
-  const res = await axios.get(`https://raw.githubusercontent.com/MR-NAYAN-404/ERROR/main/error.json`);
-  var data = res.data.data;
-  let error = `${res.data.error}`;
   const prompt = args.join(" ");
   if (!args[0]) return api.sendMessage("[ ! ] Input link.", threadID, messageID);
 
@@ -56,6 +53,6 @@ console.log(res)
     }, 5000)
   })
     } catch (err) {
-    api.sendMessage(`${error}`, event.threadID, event.messageID);  
+    api.sendMessage(`error`, event.threadID, event.messageID);  
    }
 };

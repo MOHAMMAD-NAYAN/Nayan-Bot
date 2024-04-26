@@ -27,9 +27,6 @@ start: async function({ nayan, events, args }) {
   const fs = require("fs");
   const axios = require("axios");
   const request = require("request");
-  const res = await axios.get(`https://raw.githubusercontent.com/MR-NAYAN-404/ERROR/main/error.json`);
-  var data = res.data.data;
-  let error = `${res.data.error}`;
   const prompt = args.join(" ");
   if (!args[0]) return api.sendMessage("[ ! ] Input link.", threadID, messageID);
 
@@ -59,7 +56,7 @@ console.log(res)
     }, 5000)
   })
     } catch (err) {
-    nayan.reply(`${error}`, events.threadID, events.messageID);  
+    nayan.reply(`error`, events.threadID, events.messageID);  
    }
 }
 };
