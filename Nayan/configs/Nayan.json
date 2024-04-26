@@ -1,0 +1,70 @@
+{
+  "loginoptions": {
+    "selfListen": false,
+    "selfListenEvent": false,
+    "listenEvents": true,
+    "listenTyping": false,
+    "updatePresence": true,
+    "forceLogin": false,
+    "autoMarkDelivery": true,
+    "autoMarkRead": true,
+    "autoReconnect": true,
+    "logRecordSize": "defaultLogRecordSize",
+    "online": false,
+    "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36"
+  },
+  "DESCRIPTION": "artificial intelligence is the future, and the future is here.",
+  "allowInbox": false,
+  "adminOnly": false,
+  "autoCreateDB": true,
+  "encryptSt": true,
+  "version": "4.0.0",
+  "logs": {
+    "enable": true
+  },
+  "work": {
+    "cooldownTime": 1200000
+  },
+  "help": {
+    "autoUnsend": true,
+    "delayUnsend": 60
+  },
+  "adminUpdate": {
+    "autoUnsend": true,
+    "sendNoti": true,
+    "timeToUnsend": 10
+  },
+  "adminNoti": {
+    "autoUnsend": true,
+    "sendNoti": true,
+    "timeToUnsend": 10
+  },
+  "math": {
+    "WOLFRAM": "T8J8YV-H265UQ762K"
+  },
+  "sing": {
+    "YOUTUBE_API": "AIzaSyCqox-KXEwDncsuo2HIpE0MF8J7ATln5Vc",
+    "SOUNDCLOUD_API": "M4TSyS6eV0AcMynXkA3qQASGcOFQTWub"
+  },
+  "video": {
+    "YOUTUBE_API": "AIzaSyDEE1-zZSRVI8lTaQOVsIAQFgL-_BJKvhk"
+  },
+  "audio": {
+    "YOUTUBE_API": "AIzaSyDEE1-zZSRVI8lTaQOVsIAQFgL-_BJKvhk"
+  },
+  "log": {
+    "enable": true
+  },
+  "DATABASE": {
+    "sqlite": {
+      "storage": "datasqlite/nayan.sqlite"
+    }
+  },
+  "leave": {
+    "status": true,
+    "number": 150
+  },
+  "weather": {
+    "OPEN_WEATHER": "b7f1db5959a1f5b2a079912b03f0cd96"
+  }
+}
