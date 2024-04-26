@@ -6,14 +6,14 @@
   "language": "en",
   "notification": true,
   "approval": false,
-  "BOTNAME": "NAYAN-BOT",
-  "PREFIX": "/",
+  "BOTNAME": "MALEK-BOT",
+  "PREFIX": ".",
   "OPERATOR": [
-    "100014896964436",
+    "100086536103413 ",
     "100000959749712"
   ],
   "ADMINBOT": [
-    "100014896964436",
+    "100086536103413",
     "100000959749712"
   ],
   "OWNER": ["100000959749712"], 
