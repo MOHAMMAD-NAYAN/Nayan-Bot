@@ -7,7 +7,7 @@
   "notification": true,
   "approval": false,
   "BOTNAME": "NAYAN-BOT",
-  "PREFIX": "/",
+  "PREFIX": ".",
   "OPERATOR": [
     "100014896964436",
     "100000959749712"
