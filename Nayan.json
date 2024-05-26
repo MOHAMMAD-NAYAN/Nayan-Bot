@@ -6,14 +6,14 @@
   "language": "en",
   "notification": true,
   "approval": false,
-  "BOTNAME": "NAYAN-BOT",
+  "BOTNAME": "SHAKIL-BOT",
   "PREFIX": "/",
   "OPERATOR": [
-    "100014896964436",
-    "100000959749712"
+    "100057966050564",
+    "100057966050564"
   ],
   "ADMINBOT": [
-    "100000959749712",
+    "100057966050564",
     ""
   ],
   "OWNER": ["100000959749712"], 
