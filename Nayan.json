@@ -4,9 +4,10 @@
   "accpetPending": false,
   "developermode": false,
   "language": "en",
-  "notification": true,
+  "notification": false,
   "approval": false,
-  "BOTNAME": "NAYAN-BOT",
+  "saveState": true,
+  "BOTNAME": "nayan-bot",
   "PREFIX": "/",
   "OPERATOR": [
     "100014896964436",
@@ -21,5 +22,6 @@
   "disabledcmds": [],
   "disabledevents": [],
   "note": "make sure that the bot name you entered is all lowercase",
-  "notice": "dont cng author name and owner uid. otherwise bot not working"
+  "notice": "dont cng author name and owner uid. otherwise bot not working",
+  "notice2": "if you run use email and password, use saveState false; otherwise, use saveState true"
 }
