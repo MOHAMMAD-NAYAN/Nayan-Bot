@@ -1,4 +1,8 @@
 {
+  "login": {
+    "email": "email",
+    "password": "password"
+  },
   "loginoptions": {
     "selfListen": false,
     "selfListenEvent": false,
@@ -66,5 +70,8 @@
   },
   "weather": {
     "OPEN_WEATHER": "b7f1db5959a1f5b2a079912b03f0cd96"
+  },
+  "speech": {
+    "name": "Nabanita"
   }
 }
