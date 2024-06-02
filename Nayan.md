@@ -1,7 +1,7 @@
 ## ABOUT ME
 
 name : ```Nayan Developer```</br>
-age : ```19```</br>
+age : ```20```</br>
 link : [facebook](https://www.facebook.com/profile.php?id=100000959749712).</br>
 
 ## CREDITS
@@ -12,8 +12,8 @@ modified : [NAYAN](https://replit.com/@xaikonayan/NAYAN-BOT?v=1) by ```Nayan Dev
 ## CONFIG AND CUSTOM
 
 Nayan.js : ``configure auto restart and auto accept pending messages.``</br>
-Nayan.json : ``configure bot name, bot prefix, bot operators and admins.``</br>
-Nayanstate.json : ``account cache data.``
+Nayan.json : ``configure bot name, bot prefix, bot operators and admins, appstate save``</br>
+Nayanstate.json : ``account cache data.``</br>Nayan/configs/Nayan.json : ``Set Your Bot Id Email Password``
 
 ## BOX APPROVAL
 
@@ -35,6 +35,14 @@ remove box from approved list
 ```txt
 approve remove 4834812366643016
 ```
+
+## Login System
+
+If you want to login with an email password, go to Nayan/configs/Nayan.json and set your email password ``email``, ``password`` value
+
+If You Use fbstate go to ``Nayanstate.json`` and past fbstate
+
+if you run use ``email`` and ``password``, use Nayan.json(``saveState:false``); otherwise, use Nayan.json(``saveState:true``)
 
 ## HOW TO GET 'NayanSTATE.JSON' DATA?
 
