@@ -1241,7 +1241,9 @@ function parseAndCheckLogin(ctx, http, retryCount) {
 			if (res.error === 1357001) {
 				const err = new Error('Facebook blocked login. Please visit https://facebook.com and check your account.');
 				err.error = "Not logged in.";
+				
 				throw err;
+				process.exit(1)
 			}
 			return res;
 		}
@@ -1393,11 +1395,11 @@ function createAccess_token(jar, globalOptions) {
         return [(res || resp.body), accessToken];
       })
       .catch(() => {
+				
         return [(res || null), 'NONE'];
       })
   }
 }
-
 module.exports = {
 	isReadableStream,
 	get,
