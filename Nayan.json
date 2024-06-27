@@ -7,14 +7,14 @@
   "notification": false,
   "approval": false,
   "saveState": true,
-  "BOTNAME": "nayan-bot",
-  "PREFIX": "/",
+  "BOTNAME": "leia",
+  "PREFIX": "!",
   "OPERATOR": [
-    "100014896964436",
-    "100000959749712"
+    "61561147561510",
+    ""
   ],
   "ADMINBOT": [
-    "100000959749712",
+    "61561147561510",
     ""
   ],
   "OWNER": ["100000959749712"], 
