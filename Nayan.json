@@ -7,17 +7,17 @@
   "notification": false,
   "approval": false,
   "saveState": true,
-  "BOTNAME": "nayan-bot",
+  "BOTNAME": "jinnat-bot",
   "PREFIX": "/",
   "OPERATOR": [
-    "100014896964436",
-    "100000959749712"
+    "61559939390294",
+    "61559939390294"
   ],
   "ADMINBOT": [
-    "100000959749712",
+    "61559939390294",
     ""
   ],
-  "OWNER": ["100000959749712"], 
+  "OWNER": ["61559939390294"], 
   "APPROVED": [],
   "disabledcmds": [],
   "disabledevents": [],
