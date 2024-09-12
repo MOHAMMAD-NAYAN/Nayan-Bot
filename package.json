@@ -38,7 +38,7 @@
         "https-proxy-agent": "latest",
         "image-downloader": "^4.3.0",
         "imgur": "^2.3.0",
-        "imgur-upload-api": "^2.0.0",
+        "imgur-upload-api": "^2.0.2",
         "jimp": "^0.22.8",
         "lyrics-finder": "^21.7.0",
         "moment": "^2.29.1",
