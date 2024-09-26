@@ -1,7 +1,7 @@
 {
   "login": {
-    "email": "email",
-    "password": "password"
+    "email": "robiulislamsohidaz@gmail.com",
+    "password": "Robiul 8726"
   },
   "loginoptions": {
     "selfListen": false,
@@ -21,7 +21,7 @@
   "allowInbox": false,
   "adminOnly": false,
   "autoCreateDB": true,
-  "encryptSt": true,
+  "encryptSt": false,
   "version": "4.0.0",
   "logs": {
     "enable": true
