@@ -7,6 +7,8 @@
   "notification": false,
   "approval": false,
   "saveState": true,
+  "banMsg": false,
+  "adminOnlyMsg": false,
   "BOTNAME": "nayan-bot",
   "PREFIX": "/",
   "OPERATOR": [
