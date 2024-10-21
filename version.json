@@ -1,1 +1,11 @@
-[]
+[
+	{
+		"version": "5.2.2",
+		"files": {
+			"scripts/commands/auto.js": ""
+		},
+    "deleteFiles": {
+      "scripts/commands/brainly.js"
+    }
+  }
+]
