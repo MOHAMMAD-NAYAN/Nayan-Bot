@@ -4,8 +4,8 @@
 		"files": {
 			"scripts/commands/auto.js": ""
 		},
-    "deleteFiles": {
-      "scripts/commands/brainly.js"
+                "deleteFiles": {
+                        "scripts/commands/brainly.js"
     }
   }
 ]
