@@ -5,7 +5,7 @@
 			"scripts/commands/auto.js": ""
 		},
                 "deleteFiles": {
-                        "scripts/commands/brainly.js"
+                        "scripts/commands/brainly.js": ""
     }
   }
 ]
