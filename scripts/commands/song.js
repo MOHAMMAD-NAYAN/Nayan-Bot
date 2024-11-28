@@ -35,7 +35,7 @@ module.exports.config = {
   permission: 0,
   credits: "Nayan",
   description: "example",
-  prefix: true,
+  prefix: false,
   category: "Media", 
   usages: "user", 
   cooldowns: 5,
