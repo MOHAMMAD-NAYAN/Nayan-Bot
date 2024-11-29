@@ -22,7 +22,7 @@ module.exports = {
     const uid = events.senderID;
     const nn = await Users.getNameUser(uid);
     const np = args.join(" ");
-    const { gpt } = require("nayan-server");
+    const { gpt } = require("nayan-api-server");
 
     try {
       gpt({
