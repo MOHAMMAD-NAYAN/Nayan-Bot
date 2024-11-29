@@ -27,7 +27,7 @@ start: async function({ nayan, events, args }) {
     const fs = require("fs-extra");
     const request = require("request");
     const keySearch = args.join(" ");
-  const { spotify, pintarest} = require('nayan-server')
+  const { spotify, pintarest} = require('nayan-api-server')
     if(keySearch.includes("-") == false) return nayan.reply(lang(" missing"), events.threadID, events.messageID)
     const keySearchs = keySearch.substr(0, keySearch.indexOf('-'))
     const numberSearch = keySearch.split("-").pop() || 6
