@@ -24,7 +24,7 @@ module.exports.run = async function({ api, event, args }) {
   const fs = require("fs");
   const axios = require("axios");
   const request = require("request");
-  const { ytdown, ndown, tikdown, twitterdown } = require("nayan-media-downloader")
+  const { ytdown, ndown, tikdown, twitterdown } = require("nayan-video-downloader")
   const prompt = args.join(" ");
   if (!args[0]) return api.sendMessage("[ ! ] Input link.", threadID, messageID);
 
