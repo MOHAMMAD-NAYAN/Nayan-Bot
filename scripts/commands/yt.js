@@ -19,7 +19,7 @@ start: async function({ nayan, events, args }) {
     const axios = require("axios")
     const request = require("request")
     const fs = require("fs-extra")
-  const { ytdown, ndown, tikdown, twitterdown } = require("nayan-media-downloader")
+  const { ytdown, ndown, tikdown, twitterdown } = require("nayan-video-downloader")
     const { messageID, threadID } = events;
   if (!args[0]) return nayan.sendMessage("[ ! ] Input link.", threadID, messageID);
 
