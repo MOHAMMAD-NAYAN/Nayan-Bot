@@ -10,7 +10,6 @@ module.exports = {
     usages: "query",
     cooldowns: 5,
     dependencies: {
-      "nayan-server": ""
     }
   },
 
