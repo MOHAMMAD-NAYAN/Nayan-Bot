@@ -10,7 +10,7 @@ module.exports.config = {
   cooldowns: 5,
   dependencies: {
     "axios": "",
-    "imgur-upload-api": ""
+    "nayan-imgur-upload-api": ""
   }
 };
 
