@@ -317,9 +317,11 @@ function buildAPI(globalOptions, html, jar) {
     const api = {
         setOptions: setOptions.bind(null, globalOptions),
         getAppState: function getAppState() {
-            return appState.filter((item, index, self) => self.findIndex((t) => { return t.key === item.key }) === index);
+          const appState = utils.getAppState(jar);
+          // filter duplicate
+          return appState.filter((item, index, self) => self.findIndex((t) => { return t.key === item.key; }) === index);
         }
-    };
+      };
     if (region && mqttEndpoint) {
             //fuck this shit..
         }
@@ -479,6 +481,7 @@ function login(loginData, options, callback) {
         options = {};
     }
 
+  
     const globalOptions = {
         selfListen: false,
         listenEvents: true,
