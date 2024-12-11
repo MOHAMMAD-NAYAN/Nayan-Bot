@@ -1,24 +1,104 @@
- /* eslint-disable no-prototype-builtins */
+/* eslint-disable no-prototype-builtins */
 "use strict";
 
-let request = require("request").defaults({ jar: true });
+let request = promisifyPromise(require("request").defaults({ jar: true, proxy: process.env.FB_PROXY }));
 const stream = require("stream");
 const log = require("npmlog");
 const querystring = require("querystring");
 const url = require("url");
 
-function setProxy(proxy) {
-  if (typeof proxy == 'string')
-    request = require("request").defaults({ jar: true, proxy });
-  else request = request;
-  return;
+class CustomError extends Error {
+	constructor(obj) {
+		if (typeof obj === 'string')
+			obj = { message: obj };
+		if (typeof obj !== 'object' || obj === null)
+			throw new TypeError('Object required');
+		obj.message ? super(obj.message) : super();
+		Object.assign(this, obj);
+	}
+}
+
+function callbackToPromise(func) {
+	return function (...args) {
+		return new Promise((resolve, reject) => {
+			func(...args, (err, data) => {
+				if (err)
+					reject(err);
+				else
+					resolve(data);
+			});
+		});
+	};
+}
+
+function isHasCallback(func) {
+	if (typeof func !== "function")
+		return false;
+	return func.toString().split("\n")[0].match(/(callback|cb)\s*\)/) !== null;
+}
+
+// replace for bluebird.promisify (but this only applies best to the `request` package)
+function promisifyPromise(promise) {
+	const keys = Object.keys(promise);
+	let promise_;
+	if (
+		typeof promise === "function"
+		&& isHasCallback(promise)
+	)
+		promise_ = callbackToPromise(promise);
+	else
+		promise_ = promise;
+
+	for (const key of keys) {
+		if (!promise[key]?.toString)
+			continue;
+
+		if (
+			typeof promise[key] === "function"
+			&& isHasCallback(promise[key])
+		) {
+			promise_[key] = callbackToPromise(promise[key]);
+		}
+		else {
+			promise_[key] = promise[key];
+		}
+	}
+
+	return promise_;
+}
+
+// replace for bluebird.delay
+function delay(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// replace for bluebird.try
+function tryPromise(tryFunc) {
+	return new Promise((resolve, reject) => {
+		try {
+			resolve(tryFunc());
+		} catch (error) {
+			reject(error);
+		}
+	});
+}
+
+function setProxy(url) {
+	if (typeof url == "undefined")
+		return request = promisifyPromise(require("request").defaults({
+			jar: true
+		}));
+	return request = promisifyPromise(require("request").defaults({
+		jar: true,
+		proxy: url
+	}));
 }
 
 function getHeaders(url, options, ctx, customHeader) {
-	var headers = {
+	const headers = {
 		"Content-Type": "application/x-www-form-urlencoded",
 		Referer: "https://www.facebook.com/",
-		Host: new URL(url).hostname,
+		Host: url.replace("https://", "").split("/")[0],
 		Origin: "https://www.facebook.com",
 		"User-Agent": options.userAgent,
 		Connection: "keep-alive",
@@ -27,10 +107,9 @@ function getHeaders(url, options, ctx, customHeader) {
 	if (customHeader) {
 		Object.assign(headers, customHeader);
 	}
-  if (customHeader && customHeader.noRef) 
-    delete headers.Referer;
-	if (ctx && ctx.region) 
-    headers["X-MSGR-Region"] = ctx.region;
+	if (ctx && ctx.region) {
+		headers["X-MSGR-Region"] = ctx.region;
+	}
 
 	return headers;
 }
@@ -44,7 +123,7 @@ function isReadableStream(obj) {
 	);
 }
 
-function get(url, jar, qs, options, ctx, customHeader) {
+function get(url, jar, qs, options, ctx) {
 	// I'm still confused about this
 	if (getType(qs) === "Object") {
 		for (const prop in qs) {
@@ -54,7 +133,7 @@ function get(url, jar, qs, options, ctx, customHeader) {
 		}
 	}
 	const op = {
-		headers: getHeaders(url, options, ctx, customHeader),
+		headers: getHeaders(url, options, ctx),
 		timeout: 60000,
 		qs: qs,
 		url: url,
@@ -63,39 +142,31 @@ function get(url, jar, qs, options, ctx, customHeader) {
 		gzip: true
 	};
 
-  var callback;
-  var returnPromise = new Promise(function (resolve, reject) {
-    callback = (error, data) => error != null ? reject(error) : resolve(data);
-  });
-  request(op, callback);
-
-	return returnPromise;
+	return request(op).then(function (res) {
+		return Array.isArray(res) ? res[0] : res;
+	});
 }
 
 function post(url, jar, form, options, ctx, customHeader) {
-	var op = {
-    headers: getHeaders(url, options, ctx, customHeader),
-    timeout: 60000,
+	const op = {
+		headers: getHeaders(url, options, ctx, customHeader),
+		timeout: 60000,
 		url: url,
 		method: "POST",
 		form: form,
 		jar: jar,
 		gzip: true
-	}
+	};
 
-	var callback;
-  var returnPromise = new Promise(function (resolve, reject) {
-    callback = (error, data) => error != null ? reject(error) : resolve(data);
-  });
-  request(op, callback);
-
-	return returnPromise;
+	return request(op).then(function (res) {
+		return Array.isArray(res) ? res[0] : res;
+	});
 }
 
 function postFormData(url, jar, form, qs, options, ctx) {
-	var headers = getHeaders(url, options, ctx);
+	const headers = getHeaders(url, options, ctx);
 	headers["Content-Type"] = "multipart/form-data";
-	var op = {
+	const op = {
 		headers: headers,
 		timeout: 60000,
 		url: url,
@@ -106,13 +177,9 @@ function postFormData(url, jar, form, qs, options, ctx) {
 		gzip: true
 	};
 
-	var callback;
-  var returnPromise = new Promise(function (resolve, reject) {
-    callback = (error, data) => error != null ? reject(error) : resolve(data);
-  });
-  request(op, callback);
-
-	return returnPromise;
+	return request(op).then(function (res) {
+		return Array.isArray(res) ? res[0] : res;
+	});
 }
 
 function padZeros(val, len) {
@@ -731,19 +798,21 @@ function formatAttachment(attachments, attachmentIds, attachmentMap, shareMap) {
 }
 
 function formatDeltaMessage(m) {
-	const md = m.delta.messageMetadata;
+	var md = m.delta.messageMetadata;
 
-	const mdata =
+	var mdata =
 		m.delta.data === undefined
 			? []
 			: m.delta.data.prng === undefined
 				? []
 				: JSON.parse(m.delta.data.prng);
-	const m_id = mdata.map(u => u.i);
-	const m_offset = mdata.map(u => u.o);
-	const m_length = mdata.map(u => u.l);
-	const mentions = {};
-	for (let i = 0; i < m_id.length; i++) {
+	var m_id = mdata.map(u => u.i);
+	var m_offset = mdata.map(u => u.o);
+	var m_length = mdata.map(u => u.l);
+	var mentions = {};
+	var body = m.delta.body || "";
+	var args = body == "" ? [] : body.trim().split(/\s+/);
+	for (var i = 0; i < m_id.length; i++) {
 		mentions[m_id[i]] = m.delta.body.substring(
 			m_offset[i],
 			m_offset[i] + m_length[i]
@@ -753,18 +822,20 @@ function formatDeltaMessage(m) {
 	return {
 		type: "message",
 		senderID: formatID(md.actorFbId.toString()),
-		body: m.delta.body || "",
 		threadID: formatID(
 			(md.threadKey.threadFbId || md.threadKey.otherUserFbId).toString()
 		),
+		args: args,
+		body: body,
 		messageID: md.messageId,
 		attachments: (m.delta.attachments || []).map(v => _formatAttachment(v)),
 		mentions: mentions,
 		timestamp: md.timestamp,
 		isGroup: !!md.threadKey.threadFbId,
-    participantIDs: m.delta.participants
+		participantIDs: m.delta.participants || []
 	};
 }
+
 
 function formatID(id) {
 	if (id != undefined && id != null) {
@@ -776,8 +847,8 @@ function formatID(id) {
 }
 
 function formatMessage(m) {
-	const originalMessage = m.message ? m.message : m;
-	const obj = {
+	var originalMessage = m.message ? m.message : m;
+	var obj = {
 		type: "message",
 		senderName: originalMessage.sender_name,
 		senderID: formatID(originalMessage.sender_fbid.toString()),
@@ -825,16 +896,15 @@ function formatMessage(m) {
 }
 
 function formatEvent(m) {
-	const originalMessage = m.message ? m.message : m;
-	let logMessageType = originalMessage.log_message_type;
-	let logMessageData;
+	var originalMessage = m.message ? m.message : m;
+	var logMessageType = originalMessage.log_message_type;
+	var logMessageData;
 	if (logMessageType === "log:generic-admin-text") {
 		logMessageData = originalMessage.log_message_data.untypedData;
 		logMessageType = getAdminTextMessageType(
 			originalMessage.log_message_data.message_type
 		);
-	}
-	else {
+	} else {
 		logMessageData = originalMessage.log_message_data;
 	}
 
@@ -858,13 +928,9 @@ function formatHistoryMessage(m) {
 // Get a more readable message type for AdminTextMessages
 function getAdminTextMessageType(type) {
 	switch (type) {
-    case 'unpin_messages_v2':
-      return 'log:unpin-message';
-    case 'pin_messages_v2':
-      return 'log:pin-message';
 		case "change_thread_theme":
 			return "log:thread-color";
-		case "change_thread_icon":
+		case "change_thread_quick_reaction":
 			return "log:thread-icon";
 		case "change_thread_nickname":
 			return "log:user-nickname";
@@ -883,8 +949,8 @@ function getAdminTextMessageType(type) {
 }
 
 function formatDeltaEvent(m) {
-	let logMessageType;
-	let logMessageData;
+	var logMessageType;
+	var logMessageData;
 
 	// log:thread-color => {theme_color}
 	// log:user-nickname => {participant_id, nickname}
@@ -895,8 +961,8 @@ function formatDeltaEvent(m) {
 
 	switch (m.class) {
 		case "AdminTextMessage":
-			logMessageData = m.untypedData;
 			logMessageType = getAdminTextMessageType(m.type);
+			logMessageData = m.untypedData;
 			break;
 		case "ThreadName":
 			logMessageType = "log:thread-name";
@@ -910,16 +976,6 @@ function formatDeltaEvent(m) {
 			logMessageType = "log:unsubscribe";
 			logMessageData = { leftParticipantFbId: m.leftParticipantFbId };
 			break;
-		case "ApprovalQueue":
-			logMessageType = "log:approval-queue";
-			logMessageData = {
-				approvalQueue: {
-					action: m.action,
-					recipientFbId: m.recipientFbId,
-					requestSource: m.requestSource,
-					...m.messageMetadata
-				}
-			};
 	}
 
 	return {
@@ -930,13 +986,11 @@ function formatDeltaEvent(m) {
 				m.messageMetadata.threadKey.otherUserFbId
 			).toString()
 		),
-		messageID: m.messageMetadata.messageId.toString(),
 		logMessageType: logMessageType,
 		logMessageData: logMessageData,
 		logMessageBody: m.messageMetadata.adminText,
-		timestamp: m.messageMetadata.timestamp,
 		author: m.messageMetadata.actorFbId,
-    participantIDs: m.participants
+		participantIDs: m.participants || []
 	};
 }
 
@@ -997,7 +1051,7 @@ function getFrom(str, startToken, endToken) {
 	const lastHalf = str.substring(start);
 	const end = lastHalf.indexOf(endToken);
 	if (end === -1) {
-		throw Error(
+		throw new Error(
 			"Could not find endTime `" + endToken + "` in the given string."
 		);
 	}
@@ -1087,17 +1141,16 @@ function makeDefaults(html, userID, ctx) {
 		//
 		//              Ben - July 15th 2017
 		const newObj = {
-      av: userID,
 			__user: userID,
 			__req: (reqCounter++).toString(36),
 			__rev: revision,
 			__a: 1,
-			//__af: siteData.features,
+			// __af: siteData.features,
 			fb_dtsg: ctx.fb_dtsg ? ctx.fb_dtsg : fb_dtsg,
 			jazoest: ctx.ttstamp ? ctx.ttstamp : ttstamp
-			//__spin_r: siteData.__spin_r,
-			//__spin_b: siteData.__spin_b,
-			//__spin_t: siteData.__spin_t,
+			// __spin_r: siteData.__spin_r,
+			// __spin_b: siteData.__spin_b,
+			// __spin_t: siteData.__spin_t,
 		};
 
 		// @TODO this is probably not needed.
@@ -1148,78 +1201,118 @@ function makeDefaults(html, userID, ctx) {
 	};
 }
 
-function parseAndCheckLogin(ctx, http, retryCount) {
-  var delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-  var _try = (tryData) => new Promise(function (resolve, reject) {
-    try {
-      resolve(tryData());
-    } catch (error) {
-      reject(error);
-    }
-  });
-  if (retryCount == undefined) retryCount = 0;
-  
+//Fix parseAndCheckLogin
+function parseAndCheckLogin(ctx, defaultFuncs, retryCount, sourceCall) {
+	if (retryCount == undefined) {
+		retryCount = 0;
+	}
+	if (sourceCall == undefined) {
+		try {
+			throw new Error();
+		}
+		catch (e) {
+			sourceCall = e;
+		}
+	}
 	return function (data) {
-    function any() {
-      log.verbose("parseAndCheckLogin", data.body);
-      if (data.statusCode >= 500 && data.statusCode < 600) {
-        if (retryCount >= 5) {
-          const err = new Error("Request retry failed. Check the `res` and `statusCode` property on this error.");
-					err.statusCode = data.statusCode;
-					err.res = data.body;
-					err.error = "Request retry failed. Check the `res` and `statusCode` property on this error.";
-					throw err;
-        }
-        retryCount++;
-        const retryTime = Math.floor(Math.random() * 5000);
-        log.warn("parseAndCheckLogin", "Got status code " + data.statusCode + " - " + retryCount + ". attempt to retry in " + retryTime + " milliseconds...");
-				const url = data.request.uri.protocol + "//" + data.request.uri.hostname + data.request.uri.pathname;
-        if (data.request.headers["Content-Type"].split(";")[0] === "multipart/form-data") {
+		return tryPromise(function () {
+			log.verbose("parseAndCheckLogin", data.body);
+			if (data.statusCode >= 500 && data.statusCode < 600) {
+				if (retryCount >= 5) {
+					throw new CustomError({
+						message: "Request retry failed. Check the `res` and `statusCode` property on this error.",
+						statusCode: data.statusCode,
+						res: data.body,
+						error: "Request retry failed. Check the `res` and `statusCode` property on this error.",
+						sourceCall: sourceCall
+					});
+				}
+				retryCount++;
+				const retryTime = Math.floor(Math.random() * 5000);
+				log.warn(
+					"parseAndCheckLogin",
+					"Got status code " +
+					data.statusCode +
+					" - " +
+					retryCount +
+					". attempt to retry in " +
+					retryTime +
+					" milliseconds..."
+				);
+				const url =
+					data.request.uri.protocol +
+					"//" +
+					data.request.uri.hostname +
+					data.request.uri.pathname;
+				if (
+					data.request.headers["Content-Type"].split(";")[0] ===
+					"multipart/form-data"
+				) {
 					return delay(retryTime)
-            .then(function () {
-              return http
-                .postFormData(url, ctx.jar, data.request.formData);
-            })
-            .then(parseAndCheckLogin(ctx, http, retryCount));
-        }
-        else {
-          return delay(retryTime)
-            .then(function () {
-              return http
-                .post(url, ctx.jar, data.request.formData);
-            })
-            .then(parseAndCheckLogin(ctx, http, retryCount));
-        }
-      }
-      if (data.statusCode !== 200)
-				throw new Error("parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.");
-      
-      let res = null;
+						.then(function () {
+							return defaultFuncs.postFormData(
+								url,
+								ctx.jar,
+								data.request.formData,
+								{}
+							);
+						})
+						.then(parseAndCheckLogin(ctx, defaultFuncs, retryCount, sourceCall));
+				}
+				else {
+					return delay(retryTime)
+						.then(function () {
+							return defaultFuncs.post(url, ctx.jar, data.request.formData);
+						})
+						.then(parseAndCheckLogin(ctx, defaultFuncs, retryCount, sourceCall));
+				}
+			}
+			if (data.statusCose === 404) return;
+			if (data.statusCode !== 200)
+				throw new CustomError({
+					message: "parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.",
+					statusCode: data.statusCode,
+					res: data.body,
+					error: "parseAndCheckLogin got status code: " + data.statusCode + ". Bailing out of trying to parse response.",
+					sourceCall: sourceCall
+				});
+
+			let res = null;
 			try {
 				res = JSON.parse(makeParsable(data.body));
-      } catch (e) {
-				const err = new Error("JSON.parse error. Check the `detail` property on this error.");
-				err.error = "JSON.parse error. Check the `detail` property on this error.";
-				err.detail = e;
-				err.res = data.body;
-				throw err;
+			} catch (e) {
+				throw new CustomError({
+					message: "JSON.parse error. Check the `detail` property on this error.",
+					detail: e,
+					res: data.body,
+					error: "JSON.parse error. Check the `detail` property on this error.",
+					sourceCall: sourceCall
+				});
 			}
 
 			// In some cases the response contains only a redirect URL which should be followed
 			if (res.redirect && data.request.method === "GET") {
-				return http
+				return defaultFuncs
 					.get(res.redirect, ctx.jar)
-					.then(parseAndCheckLogin(ctx, http));
-      }
+					.then(parseAndCheckLogin(ctx, defaultFuncs, undefined, sourceCall));
+			}
 
 			// TODO: handle multiple cookies?
-			if (res.jsmods && res.jsmods.require && Array.isArray(res.jsmods.require[0]) && res.jsmods.require[0][0] === "Cookie") {
-        res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace("_js_", "");
-        const cookie = formatCookie(res.jsmods.require[0][3], "facebook");
+			if (
+				res.jsmods &&
+				res.jsmods.require &&
+				Array.isArray(res.jsmods.require[0]) &&
+				res.jsmods.require[0][0] === "Cookie"
+			) {
+				res.jsmods.require[0][3][0] = res.jsmods.require[0][3][0].replace(
+					"_js_",
+					""
+				);
+				const cookie = formatCookie(res.jsmods.require[0][3], "facebook");
 				const cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
 				ctx.jar.setCookie(cookie, "https://www.facebook.com");
 				ctx.jar.setCookie(cookie2, "https://www.messenger.com");
-      }
+			}
 
 			// On every request we check if we got a DTSG and we mutate the context so that we use the latest
 			// one for the next requests.
@@ -1239,15 +1332,16 @@ function parseAndCheckLogin(ctx, http, retryCount) {
 			}
 
 			if (res.error === 1357001) {
-				const err = new Error('Facebook blocked login. Please visit https://facebook.com and check your account.');
-				err.error = "Not logged in.";
-				
-				throw err;
-				process.exit(1)
+				throw new CustomError({
+					message: "Facebook blocked login. Please visit https://facebook.com and check your account.",
+					error: "Not logged in.",
+					res: res,
+					statusCode: data.statusCode,
+					sourceCall: sourceCall
+				});
 			}
 			return res;
-		}
-		return _try(any);
+		});
 	};
 }
 
@@ -1372,6 +1466,34 @@ function formatPresence(presence, userID) {
 	};
 }
 
+function getFroms(str, startToken, endToken) {
+	//advanced search by kanzuuuuuuuuuu 
+	let results = [];
+	let currentIndex = 0;
+
+	while (true) {
+			let start = str.indexOf(startToken, currentIndex);
+			if (start === -1) break;
+
+			start += startToken.length;
+
+			let lastHalf = str.substring(start);
+			let end = lastHalf.indexOf(endToken);
+
+			if (end === -1) {
+					if (results.length === 0) {
+							throw Error("Could not find endToken `" + endToken + "` in the given string.");
+					}
+					break;
+			}
+
+			results.push(lastHalf.substring(0, end));
+			currentIndex = start + end + endToken.length;
+	}
+
+	return results.length === 0 ? "" : results.length === 1 ? results[0] : results;
+}
+
 function decodeClientPayload(payload) {
 	/*
 	Special function which Client using to "encode" clients JSON payload
@@ -1382,25 +1504,11 @@ function decodeClientPayload(payload) {
 function getAppState(jar) {
 	return jar
 		.getCookies("https://www.facebook.com")
+		.concat(jar.getCookies("https://facebook.com"))
 		.concat(jar.getCookies("https://www.messenger.com"));
 }
-
-function createAccess_token(jar, globalOptions) {
-  return function (res) {
-    return get('https://business.facebook.com/business_locations', jar, null, globalOptions)
-      .then(function (resp) {
-        var accessToken = /"],\["(\S+)","436761779744620",{/g.exec(resp.body);
-        if (accessToken) accessToken = accessToken[1].split('"],["').pop();
-        else accessToken = 'NONE';
-        return [(res || resp.body), accessToken];
-      })
-      .catch(() => {
-				
-        return [(res || null), 'NONE'];
-      })
-  }
-}
 module.exports = {
+	CustomError,
 	isReadableStream,
 	get,
 	post,
@@ -1439,5 +1547,5 @@ module.exports = {
 	getAppState,
 	getAdminTextMessageType,
 	setProxy,
-  createAccess_token
-}
+	getFroms
+};
