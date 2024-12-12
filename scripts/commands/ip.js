@@ -19,7 +19,7 @@ module.exports.run = async function({ api, event, args }) {
     const request = require("request")
     const fs = require("fs-extra")
   const prompt = args.join(" ")
-  const { ip } = require("nayan-server");
+  const { ip } = require("nayan-apis-server");
     const res = await ip(prompt);
   console.log(res)
         var msg = [];
