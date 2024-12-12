@@ -16,7 +16,7 @@ module.exports.config = {
 
 module.exports.run = async ({ api, event, args }) => {
   const axios = global.nodemodule['axios'];
-  const { imgur } = require("nayan-imgur-upload-api");
+  const { imgur } = require("nayan-imgur-upload-apis");
 
 
   let linkanh = event.messageReply?.attachments[0]?.url || args.join(" ");
